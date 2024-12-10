@@ -90,4 +90,4 @@ if __name__ == "__main__":
         total_games += 1
         if verbose_mode == True:
             n = 100
-    print(f"Total positions in TT: {total_games}")
+    print(f"Total positions in TT: {len(tt.d)}\nGames played: {total_games}")
