@@ -32,6 +32,7 @@ class TicTacToe(TwoPlayerGame):
         self.board = [" " for _ in range(9)]
         self.current_player = 1
         self.nmove = 0
+        self.winner = None
         self.history = []
 
     def possible_moves(self):
@@ -61,7 +62,7 @@ class TicTacToe(TwoPlayerGame):
         print("", self.board[0], "│", self.board[1], "│", self.board[2])
 
     def is_over(self):
-        return (self.possible_moves() == []) or (self.winner() != None)
+        return (self.possible_moves() == []) or (self.winner != None)
 
     def ttentry(self):
         self.is_winner()
@@ -76,9 +77,9 @@ if __name__ == "__main__":
         game = TicTacToe(players)
         verbose_mode = any(isinstance(player, Human_Player) for player in players)
         game.play(verbose=verbose_mode)
-        if (game.winner() != None) and (verbose_mode == True):
-            print(f"\n{game.winner()} won!")
-        elif (game.winner() == None) and (verbose_mode == True):
+        if (game.winner != None) and (verbose_mode == True):
+            print(f"\n{game.winner} won!")
+        elif (game.winner == None) and (verbose_mode == True):
             print("\nIt's a draw!")
         tt.to_file(TT_DATA_FILE)
         if (len(tt.d) % 100 == 0) or ((len(tt.d) >= 5449) and len(tt.d) % 10 == 0):
