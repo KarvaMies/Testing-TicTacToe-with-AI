@@ -45,14 +45,13 @@ class TicTacToe(TwoPlayerGame):
     def unmake_move(self, move):
         self.board[move - 1] = " "
 
-    def winner(self):
+    def is_winner(self):
         for line in WIN_LINES:
             if (
                 all(self.board[pos] == self.board[line[0]] for pos in line)
                 and self.board[line[0]] != " "
             ):
-                return self.board[line[0]]
-        return None
+                self.winner = self.board[line[0]]
 
     def show(self):
         print("\n", self.board[6], "│", self.board[7], "│", self.board[8])
@@ -65,7 +64,8 @@ class TicTacToe(TwoPlayerGame):
         return (self.possible_moves() == []) or (self.winner() != None)
 
     def ttentry(self):
-        return tuple(["".join(self.board), self.current_player, self.winner()])
+        self.is_winner()
+        return tuple(["".join(self.board), self.current_player, self.winner])
 
 
 if __name__ == "__main__":
