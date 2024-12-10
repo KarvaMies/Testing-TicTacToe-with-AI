@@ -72,7 +72,7 @@ if __name__ == "__main__":
     n = 0
     total_games = 0
     while n < 100:  # there are 5478 legal boards including empty board
-        players = [Human_Player(), RandomAI(game=TicTacToe)]
+        players = [RandomAI(game=TicTacToe), RandomAI(game=TicTacToe)]
         game = TicTacToe(players)
         verbose_mode = any(isinstance(player, Human_Player) for player in players)
         game.play(verbose=verbose_mode)
