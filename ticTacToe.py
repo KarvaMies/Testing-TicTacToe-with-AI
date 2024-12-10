@@ -1,6 +1,7 @@
-import random, os
-from easyAI import TwoPlayerGame, AI_Player, Human_Player
-from easyAI.AI import TranspositionTable
+import os
+from easyAI import TwoPlayerGame, Human_Player
+from transposition_table import tt
+from randomAI import RandomAI
 
 WIN_LINES = [
     [0, 1, 2],
@@ -15,52 +16,8 @@ WIN_LINES = [
 
 TT_DATA_FILE = "saved_tt.data"
 
-tt = TranspositionTable()
 if os.path.exists(TT_DATA_FILE):
     tt.from_file(TT_DATA_FILE)
-
-
-class RandomAI(AI_Player):
-    def __init__(self, game):
-        super().__init__(game)
-
-    def simulate_move(self, game, move):
-        """Makes simulated game to prevent updating tt"""
-        sim_game = TicTacToe(game.players)
-        sim_game.board = game.board[:]
-        sim_game.current_player = game.current_player
-        sim_game.nmove = game.nmove
-
-        # simulate  make_move manually
-        sim_game.board[move - 1] = "X" if sim_game.current_player == 1 else "0"
-        sim_game.nmove += 1
-        sim_game.current_player = 2 if sim_game.current_player == 1 else 1
-
-        # rebuilding the ttentry because it shows the previous player
-        board, prev_player, winner = sim_game.ttentry()
-        curr_player = 1 if prev_player == 2 else 2
-        new_entry = (board, curr_player, winner)
-        return new_entry
-
-    def ask_move(self, game):
-        possible_moves = game.possible_moves()
-        valid_moves = []
-
-        # Checks if the move is already in tt
-        for move in possible_moves:
-            entry = self.simulate_move(game, move)
-            if tt.d.get(entry) is None:
-                valid_moves.append(move)
-
-        # print(f"p moves: {possible_moves}")
-        # print(f"v moves: {valid_moves}")
-
-        # If not in tt, choose randomly
-        if not valid_moves:
-            valid_moves = possible_moves
-
-        chosen_move = random.choice(valid_moves)
-        return chosen_move
 
 
 class TicTacToe(TwoPlayerGame):
@@ -131,4 +88,6 @@ if __name__ == "__main__":
         if n == 1:
             print(f"All legal states reached (hopefully): {len(tt.d)}")
         total_games += 1
-    print(f"Total positions in TT: {len(tt.d)}")
+        if verbose_mode == True:
+            n = 100
+    print(f"Total positions in TT: {total_games}")
