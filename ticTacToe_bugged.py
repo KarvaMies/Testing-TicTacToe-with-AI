@@ -78,7 +78,7 @@ class TicTacToe(TwoPlayerGame):
         entry = self.ttentry()
         if not tt.d.get(entry):  # Bug found!
             with open(FILENAME, "a") as file:
-                file.write(f"{self.ttentry()}, {self.history}")
+                file.write(f"{self.ttentry()}, {self.history}\n")
             raise BugEncounteredException()
 
     def unmake_move(self, move):
