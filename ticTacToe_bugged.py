@@ -182,3 +182,5 @@ if __name__ == "__main__":
         content[0] = line
         with open(FILENAME, "w") as file:
             file.writelines(content)
+        print(f"Simulations for bug id {i} completed")
+    print(f"All simulations completed for total of {simulations * 10} simulated games")
