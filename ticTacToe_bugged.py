@@ -148,7 +148,7 @@ class TicTacToe(TwoPlayerGame):
 
 
 if __name__ == "__main__":
-    simulations = 100
+    simulations = 1000
     for i, bug in enumerate(BUGS):
         BUGS = [False] * 10
         BUGS[i] = True
