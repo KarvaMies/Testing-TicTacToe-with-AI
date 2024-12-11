@@ -34,13 +34,11 @@ class RandomAI(AI_Player):
         valid_moves = []
 
         # Checks if the move is already in tt
-        for move in possible_moves:
-            entry = self.simulate_move(game, move)
-            if tt.d.get(entry) is None:
-                valid_moves.append(move)
-
-        # print(f"p moves: {possible_moves}")
-        # print(f"v moves: {valid_moves}")
+        if len(tt.d) < 5477:  # TT already full
+            for move in possible_moves:
+                entry = self.simulate_move(game, move)
+                if tt.d.get(entry) is None:
+                    valid_moves.append(move)
 
         # If not in tt, choose randomly
         if not valid_moves:
